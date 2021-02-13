@@ -1,0 +1,145 @@
+{% extends 'main/base.html' %}
+{% block body_block %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+
+<div class="swiper-container hero-slider">
+    <div ></div>
+    <div class="swiper-wrapper">
+        <div class="swiper-slide hero-content-wrap" style="background-image: url({% static 'images/background.jpg' %});">
+
+            <div class="hero-content-overlay position-absolute w-100 h-100">
+
+                <div class="container h-100">
+
+                    <div class="row h-100">
+                        <div class="col-12 col-lg-6 d-flex flex-column justify-content-center align-items-start">
+                            <header class="entry-header">
+                                <h1>Health Center<br>IIT Jodhpur</h1>
+                            </header>
+                            <footer class="entry-footer d-flex flex-wrap align-items-center mt-4">
+                                <a href="http://iitj.ac.in/events/index.php?id=186&title=186&event=latest@iit_jodhpur"
+                                    class="button bg">Read More</a>
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="homepage-boxes">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="opening-hours">
+                    <h2 class="d-flex align-items-center">My Appointments</h2>
+                    {% if not request.user.is_authenticated %}
+                    <ul class="p-0 m-0">
+                        <li>Log in to view Appointments.</li>
+                    </ul>
+                    {% elif appointments.count == 0 %}
+                    <ul class="p-0 m-0">
+                        <li>No Appointments!</li>
+                    </ul>
+                    {% else %}
+                    <ul class="p-0 m-0">
+                        {% for appointment in appointments %}
+                        <li>Dr. {{appointment.doctor.user.first_name}} <span>{{appointment.time}}</span></li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                <div class="emergency-box">
+                    <h2 class="d-flex align-items-center">Emergency</h2>
+
+                    <div class="call-btn button bg">
+                        <a rel="" typography="LinkAlpha" data-ux="Link" href="tel:+912912801183"
+                            class="d-flex justify-content-center align-items-center"
+                            data-tccl="ux2.HEADER.header9.Section.Default.Link.Default.55282.click,click"><img
+                                src="{% static 'images/emergency-call.png' %}">+91 291 280 1183</a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-5 mt-5 mt-lg-0">
+                <div class="appointment-box">
+                    <h2 class="d-flex align-items-center">Make an Appointment</h2>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <br>  
+                        <button class="button bg" type="submit">Make Appointment</button>
+                    </form>
+                    <div class="pull-right"><p style="font-size: small;padding-top: 5px;">~ {{patientsInHc}} people expected in Health Center currently</p></div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="testimonial-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>Facilities</h2>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="testimonial-slider">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-9">
+                    <div class="testimonial-bg-shape">
+                        <div class="swiper-container testimonial-slider-wrap">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="entry-content">
+                                        A Primary Health Center (PHC) has been started at the Permanent Campus of
+                                        IIT Jodhpur from 15 June 2017. This fully equipped and self-sufficient facility
+                                        is run by M/s. Goyal Hospital & Research Center Private Limited, Jodhpur.
+                                        The facility is available to the residents of the Permanent Campus in Karwar.
+                                        Presently, the following facilities available at the PHC:<br>
+                                        1. Qualified Medical Doctors and Paramedical Staff,<br>
+                                        2. Physiotherapy Unit,<br>
+                                        3. Pharmacy,<br>
+                                        4. 24 Hours Emergency Room, and an ICU Ambulance.
+                                    </div>
+                                </div>
+
+
+                                <div class="swiper-pagination-wrap">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div
+                                                    class="swiper-pagination position-relative flex justify-content-center align-items-center">
+                                                </div>
+                                            </div><!-- .col -->
+                                        </div><!-- .row -->
+                                    </div><!-- .container -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+{% include 'main/blogs_list.html' with blogs=blogs %}
+
+
+{% endblock %}

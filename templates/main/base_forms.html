@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>IIT Jodhpur</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}" />
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+		integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/login_main.css' %}">
+
+</head>
+
+<body onload="resizeElementHeight()">
+	<div class="limiter">
+		<div class="container-login100">
+			{% block body_block %}
+			{% endblock %}
+		</div>
+	</div>
+
+
+
+</body>
+<script>
+	function resizeElementHeight() {
+		document.getElementsByClassName("container-login100")[0].style.backgroungheight = window.innerHeight.toString() +
+			"px"
+	}
+</script>
+
+</html>

@@ -1,0 +1,72 @@
+{% extends 'doctor/base.html' %}
+{% block body_block %}
+{% load bootstrap4 %}
+{% load static %}
+<div class="homepage-boxes">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="appointment-box">
+                    <h2 class="d-flex align-items-center">Next Patients</h2>
+                    <p></p>
+
+                    Treat the next patient in the queue.<br><br>
+                    <a href="{% url 'hc:prescription' %}"><button class="button bg" type="submit">Treat
+                        Patient</button></a>
+
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-5 mt-5 mt-lg-0">
+                <div class="appointment-box">
+                    <h2 class="d-flex align-items-center">Patients</h2>
+                    <p></p>
+
+                    <form method="POST" id="SearchPatientForm" action="{% url 'hc:prescription' %}" data-users-url="{% url 'hc:ajax_load_users' %}" novalidate>
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <a href="{% url 'hc:prescription' %}"><button class="button bg" type="submit">Treat
+                            Patient</button></a>
+                    </form>
+
+                    <!-- creating AJAX request using jquery for dependant dropdown list of users having same email -->
+                    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+                    <script>
+                        $("#id_email").change(function () {
+                        var url = $("#SearchPatientForm").attr("data-users-url");  // get the url of the `load_users` view
+                        var EmailId = $(this).val();  // get the selected email ID of patient from the HTML input
+
+                            $.ajax({                       // initialize an AJAX request
+                                url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+                                data: {
+                                'user_email': EmailId       // add the email id to the GET parameters
+                                },
+                                success: function (data) {   // `data` is the return of the `load_cities` view function
+                                $("#id_username").html(data);  // replace the contents of the city input with the data that came from the server
+                                }
+                            });
+
+                        });
+                    </script>
+                    <!-- jquery  -->
+
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-0">
+                <div class="appointment-box">
+                    <h2 class="d-flex align-items-center">Blogs</h2>
+                    <p></p>
+                    <a href="{% url 'main:AddBlog' %}"><button class="button bg" type="submit">Write a
+                        Blog</button></a>
+                </div>
+            </div>
+
+        </div>
+
+        {% include 'main/blogs_list.html' with blogs=blogs attr='doctor' %}
+
+    </div>
+</div>
+
+</div>
+{% endblock %}

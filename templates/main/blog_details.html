@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %}
+{% block body_block %}
+{% load bootstrap4 %}
+{% load static %}
+{% load hitcount_tags %}
+
+<div class="content" style="padding-top: 7%;">
+    <div class="container">
+        <div class="blog-wrap section-inner clearfix">
+            <h1 class="blog-title">{{ blog.title|capfirst }}</h1>
+            <div class="blog-info">
+                <div class="posted-by">
+                    <label>Author: </label>{{ blog.author.user.first_name|capfirst }} {{ blog.author.user.last_name|capfirst }} |
+                                           {{ blog.published_date }} |
+                    <label><i class="fa fa-eye"></i></label> {% get_hit_count for blog %}
+                </div>
+            </div> 
+            <div class="blog-cover">
+                <figure>
+                    {% if blog.display_image %}
+                    <img src= "{{ blog.display_image.url }}" alt="" height="230px">
+                    {% endif %}
+                </figure>
+            </div>
+            <div class="blog-content">
+                {{ blog.content|safe }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
